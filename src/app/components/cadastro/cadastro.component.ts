@@ -8,6 +8,7 @@ import { FormsModule } from "@angular/forms";
 import { MatIconModule } from '@angular/material/icon';
 import { Cliente } from './cliente';
 import { CommonModule } from "@angular/common";
+import { ClienteService } from '../../services/cliente/cliente.service';
 
 @Component({
   selector: 'app-cadastro',
@@ -26,8 +27,9 @@ import { CommonModule } from "@angular/common";
 export class CadastroComponent {
   cliente: Cliente = Cliente.newCliente();
 
+  constructor(private clienteService: ClienteService) { }
+
   salvar() {
-    console.log(this.cliente);
-    // Aqui você pode adicionar a lógica para salvar o cliente, como enviar os dados para um serviço ou API.
+    this.clienteService.salvar(this.cliente);
   }
 }
