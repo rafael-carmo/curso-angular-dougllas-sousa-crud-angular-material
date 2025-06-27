@@ -26,7 +26,12 @@ static REPO_CLIENTES = '_CLIENTES';
     localStorage.setItem(ClienteService.REPO_CLIENTES, JSON.stringify(clientes));
   }
 
-  obterStorage(): Cliente[] {
+  pesquisarClientes(nome: string): Cliente[] {
+    const clientes = this.obterStorage();
+    return clientes;
+  }
+
+  private obterStorage(): Cliente[] {
     const clientesJson = localStorage.getItem(ClienteService.REPO_CLIENTES);
     if (clientesJson) {
       return JSON.parse(clientesJson);
