@@ -71,6 +71,15 @@
               </div>
             </div>
 
+            <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+              <div fxLayout="column" fxFlex="800px">
+                <mat-form-field class="full-width">
+                  <mat-label>Url Imagem:</mat-label>
+                  <input type="text" [(ngModel)]="cliente.urlImage" name="urlImage" required matInput placeholder="Ex. https://example.com/image.jpg">
+                </mat-form-field>
+              </div>
+            </div>
+
           </mat-card-content>
           <mat-card-actions align="end">
                 <button color="primary" mat-flat-button type="submit" >

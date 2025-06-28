@@ -6,8 +6,9 @@ export class Cliente {
   cpf?: string;
   dataNascimento?: Date;
   email?: string;
+  urlImage?: string;
 
-  constructor(nome: string, cpf: string, dataNascimento: Date, email: string  ) {
+  constructor(nome: string, cpf: string, dataNascimento: Date, email: string, urlImage: string) {
     this.id = uuid();
 
     this.nome = nome;
@@ -23,6 +24,6 @@ export class Cliente {
     // return cliente;
 
     //Como eu fiz
-    return new Cliente('', '', new Date(), '');
+    return new Cliente('', '', new Date(), '', '');
   }
 }

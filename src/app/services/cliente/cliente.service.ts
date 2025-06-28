@@ -26,9 +26,14 @@ static REPO_CLIENTES = '_CLIENTES';
     localStorage.setItem(ClienteService.REPO_CLIENTES, JSON.stringify(clientes));
   }
 
-  pesquisarClientes(nome: string): Cliente[] {
+  pesquisarClientes(filter: string): Cliente[] {
     const clientes = this.obterStorage();
-    return clientes;
+    if (!filter) {
+      return clientes; // Retorna todos os clientes se um valor não for fornecido
+    }
+    // Filtra os clientes pelo nome ou email (case-insensitive)
+    return clientes.filter(cliente => cliente.nome?.toLowerCase().includes(filter.toLowerCase())
+                                   || cliente.email?.toLowerCase().includes(filter.toLowerCase()));
   }
 
   private obterStorage(): Cliente[] {

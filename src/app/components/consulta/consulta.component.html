@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="center">
   <div fxLayout="column" style="width: 80%;" class="full-width">
-    <form class="mt-60" #buscaForm="ngForm">
+    <form class="mt-60" #buscaForm="ngForm" (ngSubmit)="pesquisarClientes()">
       <mat-card appearance="outlined">
         <mat-card-header>
           <mat-card-title>Consulta de Clientes</mat-card-title>
@@ -10,13 +10,14 @@
             <div fxLayout="column" class="full-width">
               <mat-form-field appearance="fill">
                 <mat-label>Pesquisar</mat-label>
-                <input matInput placeholder="Ex: josé">
+                <input matInput name="filter" [(ngModel)]="filter" placeholder="Ex: josé" #input>
+                <!-- <input matInput (keyup)="applyFilter($event)" placeholder="Ex: josé" #input> -->
               </mat-form-field>
             </div>
           </div>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-flat-button color="primary">
+          <button mat-flat-button color="primary" type="submit">
             <mat-icon fontIcon="search"></mat-icon>
             Buscar
           </button>
@@ -26,7 +27,7 @@
   </div>
 </div>
 
-<div fxLayout="row" fxLayoutAlign="center" class="mt-20">
+<div fxLayout="row" fxLayoutAlign="center" class="mt-20 mb-40">
   <div fxLayout="column">
       <mat-card appearance="outlined">
         <mat-card-header>
@@ -36,6 +37,14 @@
           <div fxLayout="row">
             <div fxLayout="column" class="full-width">
               <table mat-table [dataSource]="clientes" class="mat-elevation-z8">
+
+                <ng-container matColumnDef="urlImage">
+                  <th mat-header-cell *matHeaderCellDef>Foto</th>
+                  <td mat-cell *matCellDef="let cliente">
+                    <img *ngIf="cliente.urlImage" [src]="cliente.urlImage" alt="{{ cliente.nome }}" class="cliente-foto">
+                  </td>
+                </ng-container>
+
                 <ng-container matColumnDef="id">
                   <th mat-header-cell *matHeaderCellDef>ID</th>
                   <td mat-cell *matCellDef="let cliente">{{ cliente.id }}</td>
@@ -75,6 +84,11 @@
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                  <!-- Row shown when there is no matching data. -->
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                  </tr>
 
               </table>
             </div>

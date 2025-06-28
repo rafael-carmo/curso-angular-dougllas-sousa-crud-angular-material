@@ -20,16 +20,19 @@ import { Cliente } from '../cadastro/cliente';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    FormsModule,
     MatTableModule,
+    FormsModule,
+    CommonModule
   ],
   templateUrl: './consulta.component.html',
   styleUrl: './consulta.component.scss'
 })
 export class ConsultaComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'nome', 'email', 'cpf', 'dataNascimento', 'acoes'];
+  displayedColumns: string[] = ['urlImage', 'id', 'nome', 'email', 'cpf', 'dataNascimento', 'acoes'];
   clientes: Cliente[] = [];
+  filter: string = '';
+
   constructor(private clienteService: ClienteService) { }
 
   ngOnInit(): void {
@@ -38,6 +41,16 @@ export class ConsultaComponent implements OnInit {
 
   carregarClientes(): void {
     this.clientes = this.clienteService.pesquisarClientes('');
+    console.table(this.clientes);
+  }
+
+  // applyFilter(event: Event): void {
+  //   const filterValue = (event.target as HTMLInputElement).value;
+  //   this.clientes = this.clienteService.pesquisarClientes(filterValue);
+  // }
+
+  pesquisarClientes(): void {
+    this.clientes = this.clienteService.pesquisarClientes(this.filter);
     console.table(this.clientes);
   }
 }
