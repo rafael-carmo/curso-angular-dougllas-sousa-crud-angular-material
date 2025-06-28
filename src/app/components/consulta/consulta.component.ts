@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
 import { ClienteService } from '../../services/cliente/cliente.service';
 import { Cliente } from '../cadastro/cliente';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-consulta',
@@ -33,7 +34,9 @@ export class ConsultaComponent implements OnInit {
   clientes: Cliente[] = [];
   filter: string = '';
 
-  constructor(private clienteService: ClienteService) { }
+  constructor(private clienteService: ClienteService,
+              private router: Router,
+  ) { }
 
   ngOnInit(): void {
     this.carregarClientes();
@@ -44,6 +47,7 @@ export class ConsultaComponent implements OnInit {
     console.table(this.clientes);
   }
 
+  // IMPLEMENTAR ESTE METODO PARA BUSCAR CLIENTES AO DIGITAR NO INPUT E NÃO APENAS AO CLICAR NO BOTÃO
   // applyFilter(event: Event): void {
   //   const filterValue = (event.target as HTMLInputElement).value;
   //   this.clientes = this.clienteService.pesquisarClientes(filterValue);
@@ -52,5 +56,11 @@ export class ConsultaComponent implements OnInit {
   pesquisarClientes(): void {
     this.clientes = this.clienteService.pesquisarClientes(this.filter);
     console.table(this.clientes);
+  }
+
+  prepararEditar(id: string): void {
+    this.router.navigate(['/cadastro'], {
+      queryParams: { id }
+    });
   }
 }

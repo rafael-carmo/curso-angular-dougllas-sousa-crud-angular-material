@@ -82,14 +82,28 @@
 
           </mat-card-content>
           <mat-card-actions align="end">
+
                 <button color="primary" mat-flat-button type="submit" >
+                  @if (atualizando) {
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                      <mat-icon class="mr-5">update</mat-icon>
+                      Atualizar
+                    </div>
+                  } @else {
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                      <mat-icon class="mr-5">save</mat-icon>
+                      Salvar
+                    </div>
+                  }
+                </button>
+                <!-- <button color="primary" mat-flat-button type="submit" >
                   <mat-icon>save</mat-icon>
                   Salvar
                 </button>
                 <button color="primary" mat-flat-button>
                   <mat-icon>refresh</mat-icon>
                   Atualizar
-                </button>
+                </button> -->
                 <button color="accent" mat-flat-button class="ml-5">
                   <mat-icon>backspace</mat-icon>
                   Limpar

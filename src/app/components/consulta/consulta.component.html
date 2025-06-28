@@ -39,7 +39,7 @@
               <table mat-table [dataSource]="clientes" class="mat-elevation-z8">
 
                 <ng-container matColumnDef="urlImage">
-                  <th mat-header-cell *matHeaderCellDef>Foto</th>
+                  <th mat-header-cell *matHeaderCellDef></th>
                   <td mat-cell *matCellDef="let cliente">
                     <img *ngIf="cliente.urlImage" [src]="cliente.urlImage" alt="{{ cliente.nome }}" class="cliente-foto">
                   </td>
@@ -73,7 +73,7 @@
                 <ng-container matColumnDef="acoes">
                   <th mat-header-cell *matHeaderCellDef>Ações</th>
                   <td mat-cell *matCellDef="let cliente">
-                    <button mat-icon-button color="primary">
+                    <button mat-icon-button color="primary" (click)="prepararEditar(cliente.id)">
                       <mat-icon>edit</mat-icon>
                     </button>
                     <button mat-icon-button color="warn">

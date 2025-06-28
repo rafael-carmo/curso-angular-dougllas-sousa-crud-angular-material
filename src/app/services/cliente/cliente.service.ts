@@ -26,6 +26,11 @@ static REPO_CLIENTES = '_CLIENTES';
     localStorage.setItem(ClienteService.REPO_CLIENTES, JSON.stringify(clientes));
   }
 
+  buscarClientePorId(id: string): Cliente | undefined {
+    const clientes = this.obterStorage();
+    return clientes.find(cliente => cliente.id === id);
+  }
+
   pesquisarClientes(filter: string): Cliente[] {
     const clientes = this.obterStorage();
     if (!filter) {
