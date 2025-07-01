@@ -48,14 +48,15 @@
                     [(ngModel)]="cliente.cpf"
                     name="cpf"
                     required
-                    pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}"
                     title="Formato: 000.000.000-00"
-                  >
+                    mask="000.000.000-00"
+                    >
+                    <!-- pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}" -->
                 </mat-form-field>
               </div>
             </div>
 
-            <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+            <!-- <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
               <div fxLayout="column" fxFlex="400px">
                 <mat-form-field class="full-width">
                   <mat-label>Data Nascimento:</mat-label>
@@ -67,6 +68,23 @@
                     name="dataNascimento"
                     required
                   >
+                </mat-form-field>
+              </div>
+            </div> -->
+            <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+              <div fxLayout="column" fxFlex="400px">
+                <mat-form-field class="full-width">
+                  <mat-label>Data Nascimento:</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    [(ngModel)]="cliente.dataNascimento"
+                    name="dataNascimento"
+                    required
+                  >
+                  <mat-hint>Formato: dd/mm/yyyy</mat-hint>
+                  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
               </div>
             </div>

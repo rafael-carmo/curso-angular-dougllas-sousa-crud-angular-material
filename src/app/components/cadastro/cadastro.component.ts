@@ -1,15 +1,19 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { MatNativeDateModule } from "@angular/material/core";
 import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from "@angular/material/button";
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import { FormsModule } from "@angular/forms";
 import { MatIconModule } from '@angular/material/icon';
 import { Cliente } from './cliente';
 import { CommonModule } from "@angular/common";
 import { ClienteService } from '../../services/cliente/cliente.service';
 import { ActivatedRoute, Router } from '@angular/router';
+
+import { NgxMaskDirective, provideNgxMask } from "ngx-mask";
 
 @Component({
   selector: 'app-cadastro',
@@ -20,8 +24,12 @@ import { ActivatedRoute, Router } from '@angular/router';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     FormsModule,
+    NgxMaskDirective
   ],
+  providers: [provideNgxMask()],
   templateUrl: './cadastro.component.html',
   styleUrl: './cadastro.component.scss'
 })

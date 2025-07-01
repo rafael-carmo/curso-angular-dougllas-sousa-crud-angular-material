@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+
 import { ClienteService } from '../../services/cliente/cliente.service';
 import { Cliente } from '../cadastro/cliente';
 import { Router } from '@angular/router';
