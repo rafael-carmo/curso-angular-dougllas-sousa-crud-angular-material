@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Cliente } from '../../components/cadastro/cliente';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,29 @@ static REPO_CLIENTES = '_CLIENTES';
     // Filtra os clientes pelo nome ou email (case-insensitive)
     return clientes.filter(cliente => cliente.nome?.toLowerCase().includes(filter.toLowerCase())
                                    || cliente.email?.toLowerCase().includes(filter.toLowerCase()));
+  }
+
+  excluirCliente(id: string): Observable<void> {
+    // Aqui você pode adicionar a lógica para excluir o cliente, como enviar uma solicitação para um serviço ou API.
+    // console.log(`Cliente com ID ${id} excluído.`);
+    // this.removerClienteDoStorage(id);
+    const clientes = this.obterStorage();
+
+    const index = clientes.findIndex(cliente => cliente.id === id);
+    if (index !== -1) {
+      clientes.splice(index, 1); // Remove o cliente do array
+      localStorage.setItem(ClienteService.REPO_CLIENTES, JSON.stringify(clientes)); // Atualiza o armazenamento local
+      return new Observable<void>(subscriber => {
+        subscriber.next(); // Emite um objeto Cliente com o ID excluído
+        subscriber.complete();
+      });
+    } else {
+      console.error(`Cliente com ID ${id} não encontrado.`);
+      return new Observable<void>(subscriber => {
+        subscriber.error(new Error(`Cliente com ID ${id} não encontrado.`));
+        subscriber.complete();
+      });
+    }
   }
 
   private obterStorage(): Cliente[] {

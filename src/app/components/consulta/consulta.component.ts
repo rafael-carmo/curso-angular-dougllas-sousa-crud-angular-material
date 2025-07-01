@@ -8,9 +8,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
+import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { ClienteService } from '../../services/cliente/cliente.service';
 import { Cliente } from '../cadastro/cliente';
 import { Router } from '@angular/router';
+import { ConfirmarExclusaoDialogComponent } from '../confirmar-exclusao-dialog/confirmar-exclusao-dialog.component';
 
 @Component({
   selector: 'app-consulta',
@@ -22,6 +24,7 @@ import { Router } from '@angular/router';
     MatButtonModule,
     MatIconModule,
     MatTableModule,
+    MatDialogModule,
     FormsModule,
     CommonModule
   ],
@@ -36,6 +39,7 @@ export class ConsultaComponent implements OnInit {
 
   constructor(private clienteService: ClienteService,
               private router: Router,
+              private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -61,6 +65,35 @@ export class ConsultaComponent implements OnInit {
   prepararEditar(id: string): void {
     this.router.navigate(['/cadastro'], {
       queryParams: { id }
+    });
+  }
+
+  confirmarExclusao(cliente: Cliente): void {
+    const dialogRef = this.dialog.open(ConfirmarExclusaoDialogComponent, {
+      width: '400px',
+      data: {
+        title: 'Confirmação de Exclusão',
+        message: `Você tem certeza que deseja excluir o cliente ${cliente.nome}?`,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.excluirCliente(cliente.id!);
+        this.carregarClientes();
+      }
+    });
+  }
+
+  excluirCliente(id: string): void {
+    this.clienteService.excluirCliente(id).subscribe({
+      next: () => {
+        console.log(`Cliente com ID ${id} excluído com sucesso.`);
+        this.carregarClientes();
+      },
+      error: (error) => {
+        console.error('Erro ao excluir cliente:', error);
+      }
     });
   }
 }
