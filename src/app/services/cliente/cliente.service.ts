@@ -11,7 +11,7 @@ static REPO_CLIENTES = '_CLIENTES';
 
   constructor() { }
 
-  salvar(cliente: Cliente): void {
+  salvar(cliente: Cliente): Observable<Cliente> {
     // Aqui você pode adicionar a lógica para salvar o cliente, como enviar os dados para um serviço ou API.
     console.log('Cliente salvo:', cliente);
     const clientes = this.obterStorage();
@@ -25,6 +25,10 @@ static REPO_CLIENTES = '_CLIENTES';
     }
 
     localStorage.setItem(ClienteService.REPO_CLIENTES, JSON.stringify(clientes));
+    return new Observable<Cliente>(subscriber => {
+      subscriber.next(cliente); // Emite o objeto Cliente salvo
+      subscriber.complete();
+    });
   }
 
   buscarClientePorId(id: string): Cliente | undefined {

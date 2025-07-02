@@ -8,8 +8,9 @@ import { MatButtonModule } from "@angular/material/button";
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { FormsModule } from "@angular/forms";
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Cliente } from './cliente';
-import { CommonModule } from "@angular/common";
+// import { CommonModule } from "@angular/common";
 import { ClienteService } from '../../services/cliente/cliente.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -41,7 +42,8 @@ export class CadastroComponent implements OnInit {
 
   constructor(private clienteService: ClienteService,
               private route: ActivatedRoute,
-              private router: Router) {}
+              private router: Router,
+              private snackBar: MatSnackBar,) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.queryParamMap.get('id');
@@ -60,7 +62,22 @@ export class CadastroComponent implements OnInit {
   }
 
   salvar() {
-    this.clienteService.salvar(this.cliente);
-    this.router.navigate(['/consulta']);
+    this.clienteService.salvar(this.cliente).subscribe({
+      next: (cliente) => {
+        console.log('Cliente salvo com sucesso:', cliente);
+        this.router.navigate(['/consulta'], { queryParams: {
+          message: 'Cliente salvo com sucesso!',
+          result: 'success',
+        } });
+      },
+      error: (error) => {
+        console.error('Erro ao salvar cliente:', error);
+        this.router.navigate(['/consulta'], { queryParams: {
+          message: 'Erro ao salvar cliente. Por favor, tente novamente.',
+          result: 'error',
+        } });
+      }
+    });
   }
+
 }

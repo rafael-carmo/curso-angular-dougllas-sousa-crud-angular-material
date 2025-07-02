@@ -9,10 +9,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ClienteService } from '../../services/cliente/cliente.service';
 import { Cliente } from '../cadastro/cliente';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmarExclusaoDialogComponent } from '../confirmar-exclusao-dialog/confirmar-exclusao-dialog.component';
 
 @Component({
@@ -40,10 +41,21 @@ export class ConsultaComponent implements OnInit {
 
   constructor(private clienteService: ClienteService,
               private router: Router,
+              private route: ActivatedRoute,
               private dialog: MatDialog,
+              private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
+    const message = this.route.snapshot.queryParamMap.get('message');
+    if (message) {
+      if (this.route.snapshot.queryParamMap.get('result') === 'success') {
+        this.showSuccess(message);
+      } else {
+        this.showError(message);
+      }
+    }
+    // Carrega os clientes ao iniciar o componente
     this.carregarClientes();
   }
 
@@ -90,11 +102,31 @@ export class ConsultaComponent implements OnInit {
     this.clienteService.excluirCliente(id).subscribe({
       next: () => {
         console.log(`Cliente com ID ${id} excluído com sucesso.`);
-        this.carregarClientes();
+        this.closeDialogSuccess('excluído');
       },
       error: (error) => {
+        this.showError('Erro ao excluir cliente. Por favor, tente novamente.');
         console.error('Erro ao excluir cliente:', error);
       }
     });
+  }
+
+  showSuccess(message: string): void {
+    this.snackBar.open(message, 'Fechar', {
+      duration: 3000,
+      panelClass: ['success-snackbar']
+    });
+  }
+
+  showError(message: string): void {
+    this.snackBar.open(message, 'Fechar', {
+      duration: 5000,
+      panelClass: ['error-snackbar']
+    });
+  }
+
+  closeDialogSuccess(title: string): void {
+    this.carregarClientes();
+    this.showSuccess(`Cliente ${title} com sucesso!`);
   }
 }
