@@ -50,27 +50,10 @@
                     required
                     title="Formato: 000.000.000-00"
                     mask="000.000.000-00"
-                    >
-                    <!-- pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}" -->
-                </mat-form-field>
-              </div>
-            </div>
-
-            <!-- <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
-              <div fxLayout="column" fxFlex="400px">
-                <mat-form-field class="full-width">
-                  <mat-label>Data Nascimento:</mat-label>
-                  <input
-                    type="date"
-                    matInput
-                    placeholder="Ex. "
-                    [(ngModel)]="cliente.dataNascimento"
-                    name="dataNascimento"
-                    required
                   >
                 </mat-form-field>
               </div>
-            </div> -->
+            </div>
             <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
               <div fxLayout="column" fxFlex="400px">
                 <mat-form-field class="full-width">
@@ -98,6 +81,33 @@
               </div>
             </div>
 
+            <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+              <div fxLayout="column" fxFlex="400px">
+                <mat-form-field class="full-width">
+                  <mat-label>Estado:</mat-label>
+                  <mat-select [(value)]="cliente.estado" name="estado" required (selectionChange)="carregaMunicipiosEvent($event)">
+                    <mat-option>Selecione...</mat-option>
+                    @for (estado of estados; track $index) {
+                      <mat-option [value]="estado.sigla">{{ estado.sigla }} - {{ estado.nome }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div fxLayout="column" fxFlex="400px">
+                <mat-form-field class="full-width">
+                  <mat-label>Municípios:</mat-label>
+                  <mat-select [(value)]="cliente.municipio" name="municipio" required>
+                    <mat-option>Selecione...</mat-option>
+                    @for (municipio of municipios; track $index) {
+                    <mat-option [value]="municipio.nome">{{ municipio.nome }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+            </div>
+
           </mat-card-content>
           <mat-card-actions align="end">
 
@@ -114,14 +124,6 @@
                     </div>
                   }
                 </button>
-                <!-- <button color="primary" mat-flat-button type="submit" >
-                  <mat-icon>save</mat-icon>
-                  Salvar
-                </button>
-                <button color="primary" mat-flat-button>
-                  <mat-icon>refresh</mat-icon>
-                  Atualizar
-                </button> -->
                 <button color="accent" mat-flat-button class="ml-5">
                   <mat-icon>backspace</mat-icon>
                   Limpar
