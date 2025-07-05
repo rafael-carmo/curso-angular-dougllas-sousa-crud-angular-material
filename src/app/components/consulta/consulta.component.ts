@@ -15,6 +15,7 @@ import { ClienteService } from '../../services/cliente/cliente.service';
 import { Cliente } from '../cadastro/cliente';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmarExclusaoDialogComponent } from '../confirmar-exclusao-dialog/confirmar-exclusao-dialog.component';
+import { FormatCpfPipe } from '../../pipes/format-cpf.pipe';
 
 @Component({
   selector: 'app-consulta',
@@ -28,7 +29,8 @@ import { ConfirmarExclusaoDialogComponent } from '../confirmar-exclusao-dialog/c
     MatTableModule,
     MatDialogModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    FormatCpfPipe
   ],
   templateUrl: './consulta.component.html',
   styleUrl: './consulta.component.scss'
